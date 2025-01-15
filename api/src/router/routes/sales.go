@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-var sales = []Route{
+var salesRoutes = []Route{
 	{ // criar uma venda
 		URI:                "/venda",
 		Method:             http.MethodPost,
@@ -31,13 +31,13 @@ var sales = []Route{
 		NeedAuthentication: false,
 	},
 	{ // editar uma venda
-		URI:                "/venda",
+		URI:                "/venda/{sellId}",
 		Method:             http.MethodPut,
 		Function:           controllers.EditSale,
 		NeedAuthentication: false,
 	},
 	{ // deletar uma venda
-		URI:                "/venda",
+		URI:                "/venda/{sellId}",
 		Method:             http.MethodDelete,
 		Function:           controllers.DeleteSale,
 		NeedAuthentication: false,

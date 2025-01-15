@@ -175,14 +175,14 @@ func (repository Interactions) GetLinkedUserId(interactionID uint64) (uint64, er
 func (repository Interactions) EditInteraction(interaction models.Interactions) error {
 	// query
 	statement, err := repository.db.Prepare(
-		"UPDATE interactions SET status = ?, date = ?, interaction = ?, content = ? Where id = ? ")
+		"UPDATE interactions SET client_id = ?, status = ?, date = ?, interaction = ?, content = ? Where id = ? ")
 	if err != nil {
 		return err
 	}
 	defer statement.Close()
 
 	//executando a query
-	if _, err := statement.Exec(interaction.Status, interaction.Date, interaction.Interaction, interaction.Content, interaction.ID); err != nil {
+	if _, err := statement.Exec(interaction.ID, interaction.Status, interaction.Date, interaction.Interaction, interaction.Content, interaction.ID); err != nil {
 		return err
 	}
 

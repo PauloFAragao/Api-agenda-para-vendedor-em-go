@@ -18,35 +18,35 @@ type Interactions struct {
 }
 
 // Prepare vai chamar os métodos para validar os dados da interação
-func (interactions *Interactions) Prepare() error {
+func (interaction *Interactions) Prepare() error {
 
 	// validando os dados
-	if err := interactions.validate(); err != nil {
+	if err := interaction.validate(); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (interactions *Interactions) validate() error {
+func (interaction *Interactions) validate() error {
 
 	// verificando se tem id
-	if interactions.ClientID <= 0 {
+	if interaction.ClientID <= 0 {
 		return errors.New("é necessário ter o id do cliente")
 	}
 
 	// verificando se tem dados de status
-	if interactions.Status == "" {
+	if interaction.Status == "" {
 		return errors.New("o status é obrigatório e não pode estar em branco, complete com: já aconteceu, marcada, re-marcada, etc")
 	}
 
 	// verificar Date
-	if ok := interactions.Date.IsZero(); ok {
+	if ok := interaction.Date.IsZero(); ok {
 		return errors.New("a data não pode estar em branco")
 	}
 
 	// verificar Interaction
-	if interactions.Interaction == "" {
+	if interaction.Interaction == "" {
 		return errors.New("o tipo de interação não pode estar em branco, complete com: pessoalmente, por telefone, por mensagem, etc")
 	}
 

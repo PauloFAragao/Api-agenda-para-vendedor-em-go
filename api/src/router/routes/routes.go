@@ -22,6 +22,7 @@ func Configure(r *mux.Router) *mux.Router {
 	routes = append(routes, loginRoute)
 	routes = append(routes, clientRoutes...)
 	routes = append(routes, interactionRotes...)
+	routes = append(routes, salesRoutes...)
 
 	// adicionando as rotas ao router
 	for _, route := range routes {

@@ -92,13 +92,13 @@ func ViewInteractions(w http.ResponseWriter, r *http.Request) {
 	repository := repository.NewInteractionsRepository(db)
 
 	// buscando
-	clients, erro := repository.SearchAllInteractions(userIDInToken)
+	sales, erro := repository.SearchAllInteractions(userIDInToken)
 	if erro != nil {
 		responses.ErrorResponse(w, http.StatusInternalServerError, erro)
 		return
 	}
 
-	responses.JSONResponse(w, http.StatusOK, clients)
+	responses.JSONResponse(w, http.StatusOK, sales)
 }
 
 // SearchInteraction é chamado quando a rota /interacao/{interactionId} com o método get é acessada - é chamada para pesquisar uma interação especifica, usando seu id
@@ -132,13 +132,13 @@ func SearchInteraction(w http.ResponseWriter, r *http.Request) {
 	repository := repository.NewInteractionsRepository(db)
 
 	// buscando
-	clients, erro := repository.SearchByID(userIDInToken, interactionID)
+	interactions, erro := repository.SearchByID(userIDInToken, interactionID)
 	if erro != nil {
 		responses.ErrorResponse(w, http.StatusInternalServerError, erro)
 		return
 	}
 
-	responses.JSONResponse(w, http.StatusOK, clients)
+	responses.JSONResponse(w, http.StatusOK, interactions)
 }
 
 // SearchInteractionWithClient é chamado quando a rota /interacao-cliente/{clientId} com o método get é acessada - é chamada para ver todas as interações do usuário com um cliente especifico, usando o id do cliente
@@ -296,7 +296,7 @@ func DeleteInteraction(w http.ResponseWriter, r *http.Request) {
 
 	// verificando se o id do que vai ser alterado e o id no token são iguais
 	if linkedUserId != userIDInToken {
-		responses.ErrorResponse(w, http.StatusForbidden, errors.New("não é possível atualizar uma interação que não seja sua"))
+		responses.ErrorResponse(w, http.StatusForbidden, errors.New("não é possível deletar uma interação que não seja sua"))
 		return
 	}
 
