@@ -101,3 +101,43 @@ func (repository Users) SearchByEmail(email string) (models.User, error) {
 
 	return user, nil
 }
+
+// GetPassword busca a senha salva no banco
+func (repository Users) GetPassword(ID uint64) (string, error) {
+	// query
+	query, err := repository.db.Query("SELECT password FROM users WHERE id = ?", ID)
+	if err != nil {
+		return "", err
+	}
+	defer query.Close()
+
+	var password string
+
+	// executando a query
+	if query.Next() {
+		if err := query.Scan(&password); err != nil {
+			return "", err
+		}
+	}
+
+	return password, nil
+}
+
+func (repository Users) EditPassword(userID uint64, password string) error {
+
+	// query
+	statement, err := repository.db.Prepare(
+		"UPDATE users SET password = ? WHERE id = ?",
+	)
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	// executando a query
+	if _, err := statement.Exec(password, userID); err != nil {
+		return err
+	}
+
+	return nil
+}

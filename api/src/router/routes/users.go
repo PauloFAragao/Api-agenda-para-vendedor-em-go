@@ -24,4 +24,10 @@ var userRoutes = []Route{
 		Function:           controllers.DeleteUser,
 		NeedAuthentication: true,
 	},
+	{
+		URI:                "/usuario/{userId}/atualizar-senha",
+		Method:             http.MethodPost,
+		Function:           controllers.EditPassword,
+		NeedAuthentication: true,
+	},
 }
