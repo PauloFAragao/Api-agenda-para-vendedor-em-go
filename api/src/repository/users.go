@@ -84,7 +84,7 @@ func (repository Users) DisableUser(ID uint64) error {
 // SearchByEmail busca um usuário por e-mail busca seu id e senha
 func (repository Users) SearchByEmail(email string) (models.User, error) {
 	// query
-	query, err := repository.db.Query("SELECT id, password FROM users WHERE email = ?", email)
+	query, err := repository.db.Query("SELECT id, password FROM users WHERE email = ? AND active = true", email)
 	if err != nil {
 		return models.User{}, err
 	}

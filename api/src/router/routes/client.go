@@ -36,7 +36,7 @@ var clientRoutes = []Route{
 		Function:           controllers.DeleteClient,
 		NeedAuthentication: true,
 	},
-	{ // rota para buscar um usuário
+	{ // rota para buscar um cliente por nome
 		URI:                "/buscar-cliente",
 		Method:             http.MethodGet,
 		Function:           controllers.SearchClientByName,

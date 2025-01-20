@@ -24,7 +24,7 @@ var salesRoutes = []Route{
 		Function:           controllers.SearchSale,
 		NeedAuthentication: false,
 	},
-	{ // visualizar todas as vendas
+	{ // visualizar todas as vendas feitas a um cliente
 		URI:                "/vendas-cliente/{clientId}",
 		Method:             http.MethodGet,
 		Function:           controllers.SearchSalesForClient,

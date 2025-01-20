@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <title>Login Page</title>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+
+        <div class="form-container sign-up">
+            <form>
+                <h1>Cadastrar</h1>
+                <br/>
+                <input type="text" name = "name" id="name" placeholder="Nome" required="required">
+                <input type="email" name = "email" id="email" placeholder="E-mail" required="required">
+                <input type="password" name = "password" id = "password" placeholder="Senha" required="required">
+                <input type="password" name = "cPassword" id = "cPassword" placeholder="Confirmar Senha" required="required">
+                <button class="registerBurtton" id="registerBurtton">Cadastrar</button>
+            </form>
+        </div>
+
+        <div class="form-container sign-in">
+            <form>
+                <h1>Entrar</h1>
+                <br/>
+                <input type="email" name = "emailL" id="emailL" placeholder="E-mail" required="required">
+                <input type="password" name = "passwordL" id = "passwordL" placeholder="Senha" required="required">
+                <a href="#">Esqueceu a senha?</a>
+                <button class="loginBurtton" id="loginBurtton">Entrar</button>
+            </form>
+        </div>
+
+        <div class="toggle-container">
+            <div class="toggle">
+                
+                <div class="toggle-panel toggle-left">
+                    <h1>Bem vindo de volta</h1>
+                    <p>Faça login para ter acesso aos seus clientes, vendas e sua agenda</p>
+                    <button class="hidden" id="login">Entrar</button>
+                </div>
+
+                <div class="toggle-panel toggle-right">
+                    <h1>Olá não tem uma conta? Crie agora!</h1>
+                    <p>Registre-se para cadastrar seus clientes, vendas e criar uma agenda</p>
+                    <button class="hidden" id="register">Cadastrar</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/assets/js/login.js"></script>
+    
+</body>
+
+</html>

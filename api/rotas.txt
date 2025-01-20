@@ -1,0 +1,74 @@
+/login : MethodPost
+    rota para autenticação, essa rota espera receber um json com: email e senha
+
+/usuario : MethodPost
+    rota para criar usuário, essa rota espera receber um json com: nome, email e senha
+
+/usuario/{userId} : MethodPut
+    rota para editar um usuário, essa rota espera receber um json com: nome, email e senha
+
+/usuario/{userId} : MethodDelete
+    rota para fazer o softDelete do usuário
+
+/usuario/{userId}/atualizar-senha
+    rota para fazer a edição da senha do usuário, essa rota espera receber um json com: a senha atual e a nova senha
+
+/cliente : MethodPost
+    rota para adicionar um novo cliente, essa rota espera receber um json com: o nome(obrigatório), contatos e endereço(opcional)
+
+/cliente : MethodGet
+    rota para pesquisar todos os clientes do usuário
+
+/cliente/{clientId} : MethodGet
+    rota para pesquisar um cliente especifico do usuário usando id
+
+/cliente/{clientId} : MethodPut
+    rota para editar um cliente, essa rota espera receber um json com: o nome(obrigatório), contatos e endereço(opcional)
+
+/cliente/{clientId} : MethodDelete
+    rota para fazer o softDelete de um cliente
+
+/buscar-cliente : MethodGet
+    rota para pesquisar um cliente especifico do usuário pelo nome (/buscar-cliente?client=nomebuscado)
+
+/interacao : MethodPost
+    rota para criar uma nova interação, essa rota espera receber um jon com: clientId, status, date, interaction (obrigatório) e content (opcional)
+
+/interacao : MethodGet
+    rota para visualizar todas as interações do usuário
+
+/interacao/{interactionId} : MethodGet
+    rota para visualizar uma interação especifica entre o usuário e um cliente
+
+/interacao-cliente/{clientId} : MethodGet
+    rota para ver todas as interações entre o usuário e um cliente
+
+/interacao/{interactionId} : MethodPut
+    rota para editar uma interação, essa rota espera receber um json com: clientId, status, date, interaction (obrigatório) e content (opcional)
+
+/interacao/{interactionId} : MethodDelete
+    rota para fazer o softDelete de uma interação
+
+/venda : MethodPost
+    rota para criar uma venda, essa rota espera receber um json com: clientId, date, sale
+
+/venda : MethodGet
+    rota para visualizar todas as vendas do usuário
+
+/venda/{sellId} : MethodGet
+    rota para visualizar uma venda especifica
+
+/vendas-cliente/{clientId} : MethodGet
+    rota para visualizar todas as vendas feitas a um cliente
+
+/venda/{sellId} : MethodPut
+    rota para editar uma venda, essa rota espera receber um json com: clientId, date, sale
+
+/venda/{sellId} : MethodDelete
+    rota para fazer o softDelete de uma venda
+
+
+
+
+
+
