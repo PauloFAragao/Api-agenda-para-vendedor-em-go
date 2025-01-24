@@ -17,12 +17,14 @@ function login(event)
 {
     event.preventDefault();
 
+    console.log($('#passwordL').val())
+
     $.ajax({
         url: "/login",
         method: "POST",
         data: {
             email: $('#emailL').val(),
-            senha: $('#passwordL').val(),
+            password: $('#passwordL').val(),
         }
     }).done(function(){
         window.location = "/home";
@@ -63,7 +65,7 @@ function register(event)
         }).fail(function(){
             alert("Usuário ou senha inválidos");
         })
-        
+
     }).fail(function(err){
         console.log(err)
         alert("Erro ao cadastrar usuário");

@@ -3,7 +3,9 @@ package controllers
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"webapp/src/config"
 	"webapp/src/responses"
 )
 
@@ -25,8 +27,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// url pra enviar para api
-	//url := fmt.Sprintf("http://localhost:5000/usuario")
-	url := "http://localhost:5000/usuario"
+	url := fmt.Sprintf("%s/usuario", config.APIURL)
 
 	// enviando para a api
 	response, err := http.Post(url, "application/json", bytes.NewBuffer(user))
