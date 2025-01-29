@@ -46,28 +46,30 @@ func (repository Sales) CreateSale(sale models.Sales) (uint64, error) {
 }
 
 // SearchAllSales busca todas as vedas do usuário
-func (repository Sales) SearchAllSales(userID uint64) ([]models.Sales, error) {
+func (repository Sales) SearchAllSales(userID uint64) ( /*[]models.Sales*/ []models.Sale, error) {
 	// query de pesquisa
 	query, err := repository.db.Query(
-		"SELECT * FROM sales WHERE seller_id = ? AND active = true", userID)
+		"SELECT date, sale FROM sales WHERE seller_id = ? AND active = true", userID)
 	if err != nil {
 		return nil, err
 	}
 	defer query.Close()
 
-	var sales []models.Sales
+	// var sales []models.Sales
+	var sales []models.Sale
 
 	// executando a query
 	for query.Next() {
-		var sale models.Sales
+		// var sale models.Sales
+		var sale models.Sale
 
 		if err = query.Scan(
-			&sale.ID,
-			&sale.SellerID,
-			&sale.ClientID,
+			//&sale.ID,
+			//&sale.SellerID,
+			//&sale.ClientID,
 			&sale.Date,
 			&sale.Sale,
-			&sale.Active,
+			//&sale.Active,
 		); err != nil {
 			return nil, err
 		}
@@ -79,28 +81,31 @@ func (repository Sales) SearchAllSales(userID uint64) ([]models.Sales, error) {
 }
 
 // SearchByID busca uma venda especifica
-func (repository Sales) SearchByID(userID, saleID uint64) (models.Sales, error) {
+func (repository Sales) SearchByID(userID, saleID uint64) ( /*models.Sales*/ models.Sale, error) {
 	//query
 	query, err := repository.db.Query(
-		"SELECT * FROM sales WHERE id = ? AND seller_id = ? AND active = true", saleID, userID)
+		"SELECT date, sale FROM sales WHERE id = ? AND seller_id = ? AND active = true", saleID, userID)
 	if err != nil {
-		return models.Sales{}, err
+		// return models.Sales{}, err
+		return models.Sale{}, err
 	}
 	defer query.Close()
 
-	var sale models.Sales
+	// var sale models.Sales
+	var sale models.Sale
 
 	// executando a query
 	if query.Next() {
 		if err = query.Scan(
-			&sale.ID,
-			&sale.SellerID,
-			&sale.ClientID,
+			//&sale.ID,
+			//&sale.SellerID,
+			//&sale.ClientID,
 			&sale.Date,
 			&sale.Sale,
-			&sale.Active,
+			//&sale.Active,
 		); err != nil {
-			return models.Sales{}, err
+			// return models.Sales{}, err
+			return models.Sale{}, err
 		}
 	}
 
@@ -108,28 +113,30 @@ func (repository Sales) SearchByID(userID, saleID uint64) (models.Sales, error) 
 }
 
 // SearchByClient busca todas as vendas a um cliente
-func (repository Sales) SearchByClient(userID, clientID uint64) ([]models.Sales, error) {
+func (repository Sales) SearchByClient(userID, clientID uint64) ( /*[]models.Sales*/ []models.Sale, error) {
 	// query
 	query, err := repository.db.Query(
-		"SELECT * FROM sales WHERE client_id = ? AND seller_id = ? AND active = true", clientID, userID)
+		"SELECT date, sale FROM sales WHERE client_id = ? AND seller_id = ? AND active = true", clientID, userID)
 	if err != nil {
 		return nil, err
 	}
 	defer query.Close()
 
-	var sales []models.Sales
+	// var sales []models.Sales
+	var sales []models.Sale
 
 	// executando a query
 	for query.Next() {
-		var sale models.Sales
+		// var sale models.Sales
+		var sale models.Sale
 
 		if err = query.Scan(
-			&sale.ID,
-			&sale.SellerID,
-			&sale.ClientID,
+			//&sale.ID,
+			//&sale.SellerID,
+			//&sale.ClientID,
 			&sale.Date,
 			&sale.Sale,
-			&sale.Active,
+			//&sale.Active,
 		); err != nil {
 			return nil, err
 		}

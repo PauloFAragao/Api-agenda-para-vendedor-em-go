@@ -270,7 +270,7 @@ func DeleteClient(w http.ResponseWriter, r *http.Request) {
 	responses.JSONResponse(w, http.StatusOK, nil)
 }
 
-// SearchClientByName é chamado para buscar um cliente usando uma string, quando a rota /cliente/buscar com o método get é acessada - busca um cliente que o usuário tem cadastrado pelo nome
+// SearchClientByName é chamado para buscar um cliente usando uma string, quando a rota /buscar-cliente com o método get é acessada - busca um cliente que o usuário tem cadastrado pelo nome
 func SearchClientByName(w http.ResponseWriter, r *http.Request) {
 
 	// pegando a string pesquisada
@@ -302,5 +302,4 @@ func SearchClientByName(w http.ResponseWriter, r *http.Request) {
 	}
 
 	responses.JSONResponse(w, http.StatusOK, clients)
-
 }

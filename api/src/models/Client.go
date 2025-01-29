@@ -15,6 +15,13 @@ type Clients struct {
 	Active   bool   `json:"active,omitempty"`   // indica se o usuário está ativo ou não - esse dado não vai ser visível para o usuário
 }
 
+// Client existe para ser usado como resposta
+type Client struct {
+	Name     string `json:"name,omitempty"`
+	Contacts string `json:"contacts,omitempty"` // telefone, WhatsApp, etc...
+	Address  string `json:"address,omitempty"`  // endereço completo do cliente
+}
+
 // Prepare vai chamar os métodos para formatar e validar os dados do cliente
 func (client *Clients) Prepare() error {
 

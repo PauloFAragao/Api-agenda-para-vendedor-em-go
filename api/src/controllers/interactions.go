@@ -308,3 +308,69 @@ func DeleteInteraction(w http.ResponseWriter, r *http.Request) {
 
 	responses.JSONResponse(w, http.StatusOK, nil)
 }
+
+// ViewTaggedInteractions é chamado quando a rota /interacoes-marcadas com o método delete é acessada
+func ViewTaggedInteractions(w http.ResponseWriter, r *http.Request) {
+	// pegando o id do usuário no token
+	userIDInToken, err := authentication.ExtractUserID(r)
+	if err != nil {
+		responses.ErrorResponse(w, http.StatusUnauthorized, err)
+		return
+	}
+
+	// abrindo conexão com o banco de dados
+	db, err := database.Connect()
+	if err != nil {
+		responses.ErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	// criando o repositório
+	repository := repository.NewInteractionsRepository(db)
+
+	// buscando
+	sales, erro := repository.SearchTaggedInteractions(userIDInToken)
+	if erro != nil {
+		responses.ErrorResponse(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	responses.JSONResponse(w, http.StatusOK, sales)
+}
+
+// ViewInteractionsMarkedOnDate é chamado quando a rota /interacao-date/{interactionDate} com o método delete é acessada
+func ViewInteractionsMarkedOnDate(w http.ResponseWriter, r *http.Request) {
+	// capturando os parâmetros
+	parameters := mux.Vars(r)
+
+	interactionDate := parameters["interactionDate"]
+
+	// pegando o id do usuário no token
+	userIDInToken, err := authentication.ExtractUserID(r)
+	if err != nil {
+		responses.ErrorResponse(w, http.StatusUnauthorized, err)
+		return
+	}
+
+	// abrindo conexão com o banco de dados
+	db, err := database.Connect()
+	if err != nil {
+		responses.ErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	defer db.Close()
+
+	// criando o repositório
+	repository := repository.NewInteractionsRepository(db)
+
+	// buscando
+	sales, erro := repository.SearchInteractionsMarkedOnDate(interactionDate, userIDInToken)
+	if erro != nil {
+		responses.ErrorResponse(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	responses.JSONResponse(w, http.StatusOK, sales)
+
+}

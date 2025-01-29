@@ -48,30 +48,38 @@ func (repository Interactions) CreateInteractions(interaction models.Interaction
 }
 
 // SearchAllInteractions busca no banco todas as interações do usuário com seus clientes
-func (repository Interactions) SearchAllInteractions(userID uint64) ([]models.Interactions, error) {
+func (repository Interactions) SearchAllInteractions(userID uint64) ( /*[]models.Interactions*/ []models.Interaction, error) {
 	// query de pesquisa
 	query, err := repository.db.Query(
-		"SELECT * FROM interactions WHERE seller_id = ? AND active = true", userID)
+		//"SELECT * FROM interactions WHERE seller_id = ? AND active = true", userID)
+		`SELECT c.name, i.status, i.date, i.interaction, i.content 
+		FROM interactions i 
+		INNER JOIN clients c ON c.id = i.client_id 
+		WHERE i.seller_id = ? AND i.active = true`,
+		userID)
 	if err != nil {
 		return nil, err
 	}
 	defer query.Close()
 
-	var interactions []models.Interactions
+	//var interactions []models.Interactions
+	var interactions []models.Interaction
 
 	// executando a query
 	for query.Next() {
-		var interaction models.Interactions
+		//var interaction models.Interactions
+		var interaction models.Interaction
 
 		if err = query.Scan(
-			&interaction.ID,
-			&interaction.SellerID,
-			&interaction.ClientID,
+			//&interaction.ID,
+			//&interaction.SellerID,
+			//&interaction.ClientID,
+			&interaction.ClientName,
 			&interaction.Status,
 			&interaction.Date,
 			&interaction.Interaction,
 			&interaction.Content,
-			&interaction.Active,
+			//&interaction.Active,
 		); err != nil {
 			return nil, err
 		}
@@ -83,62 +91,78 @@ func (repository Interactions) SearchAllInteractions(userID uint64) ([]models.In
 }
 
 // SearchInteraction busca no banco de dados uma interação pelo seu id
-func (repository Interactions) SearchByID(userID, interactionID uint64) (models.Interactions, error) {
+func (repository Interactions) SearchByID(userID, interactionID uint64) ( /*models.Interactions*/ models.Interaction, error) {
 	//query
 	query, err := repository.db.Query(
-		"SELECT * FROM interactions WHERE id = ? AND seller_id = ? AND active = true", interactionID, userID)
+		//"SELECT * FROM interactions WHERE id = ? AND seller_id = ? AND active = true", interactionID, userID)
+		`SELECT c.name, i.status, i.date, i.interaction, i.content 
+		FROM interactions i 
+		INNER JOIN clients c ON c.id = i.client_id 
+		WHERE i.id = ? AND i.seller_id = ? AND i.active = true`,
+		interactionID, userID)
 	if err != nil {
-		return models.Interactions{}, err
+		// return models.Interactions{}, err
+		return models.Interaction{}, err
 	}
 	defer query.Close()
 
-	var interaction models.Interactions
+	//var interaction models.Interactions
+	var interaction models.Interaction
 
 	// executando a query
 	if query.Next() {
 		if err = query.Scan(
-			&interaction.ID,
-			&interaction.SellerID,
-			&interaction.ClientID,
+			//&interaction.ID,
+			//&interaction.SellerID,
+			//&interaction.ClientID,
+			&interaction.ClientName,
 			&interaction.Status,
 			&interaction.Date,
 			&interaction.Interaction,
 			&interaction.Content,
-			&interaction.Active,
+			//&interaction.Active,
 		); err != nil {
-			return models.Interactions{}, err
+			// return models.Interactions{}, err
+			return models.Interaction{}, err
 		}
 	}
 
 	return interaction, nil
-
 }
 
 // SearchByClient busca todas as interações do usuário com um cliente
-func (repository Interactions) SearchByClient(userID, clientID uint64) ([]models.Interactions, error) {
+func (repository Interactions) SearchByClient(userID, clientID uint64) ( /*[]models.Interactions*/ []models.Interaction, error) {
 	//query
 	query, err := repository.db.Query(
-		"SELECT * FROM interactions WHERE client_id = ? AND seller_id = ? AND active = true", clientID, userID)
+		//"SELECT * FROM interactions WHERE client_id = ? AND seller_id = ? AND active = true", clientID, userID)
+		`SELECT c.name, i.status, i.date, i.interaction, i.content 
+		FROM interactions i 
+		INNER JOIN clients c ON c.id = i.client_id 
+		WHERE i.client_id = ? AND i.seller_id = ? AND i.active = true`,
+		clientID, userID)
 	if err != nil {
 		return nil, err
 	}
 	defer query.Close()
 
-	var interactions []models.Interactions
+	// var interactions []models.Interactions
+	var interactions []models.Interaction
 
 	// executando a query
 	for query.Next() {
-		var interaction models.Interactions
+		// var interaction models.Interactions
+		var interaction models.Interaction
 
 		if err = query.Scan(
-			&interaction.ID,
-			&interaction.SellerID,
-			&interaction.ClientID,
+			//&interaction.ID,
+			//&interaction.SellerID,
+			//&interaction.ClientID,
+			&interaction.ClientName,
 			&interaction.Status,
 			&interaction.Date,
 			&interaction.Interaction,
 			&interaction.Content,
-			&interaction.Active,
+			//&interaction.Active,
 		); err != nil {
 			return nil, err
 		}
@@ -206,4 +230,83 @@ func (repository Interactions) DisableInteraction(ID uint64) error {
 	}
 
 	return nil
+}
+
+func (repository Interactions) SearchTaggedInteractions(userID uint64) ( /*[]models.Interactions*/ []models.Interaction, error) {
+	// query de pesquisa
+	query, err := repository.db.Query(
+		//"SELECT * FROM interactions WHERE seller_id = ? AND active = true AND date >= NOW()", userID)
+		`SELECT c.name, i.status, i.date, i.interaction, i.content 
+		FROM interactions i 
+		INNER JOIN clients c ON c.id = i.client_id 
+		WHERE i.seller_id = ? AND i.active = true AND i.date >= NOW()`,
+		userID)
+	if err != nil {
+		return nil, err
+	}
+	defer query.Close()
+
+	//var interactions []models.Interactions
+	var interactions []models.Interaction
+
+	// executando a query
+	for query.Next() {
+		//var interaction models.Interactions
+		var interaction models.Interaction
+
+		if err = query.Scan(
+			//&interaction.ID,
+			//&interaction.SellerID,
+			//&interaction.ClientID,
+			&interaction.ClientName,
+			&interaction.Status,
+			&interaction.Date,
+			&interaction.Interaction,
+			&interaction.Content,
+			//&interaction.Active,
+		); err != nil {
+			return nil, err
+		}
+
+		interactions = append(interactions, interaction)
+	}
+
+	return interactions, nil
+}
+
+func (repository Interactions) SearchInteractionsMarkedOnDate(stringDate string, userID uint64) ([]models.Interaction, error) {
+	// query de pesquisa
+	query, err := repository.db.Query(
+		`SELECT c.name, i.status, i.date, i.interaction, i.content 
+		FROM interactions i 
+		INNER JOIN clients c ON c.id = i.client_id 
+		WHERE DATE(i.date) = ? AND i.seller_id = ? AND i.active = true`,
+		stringDate, userID)
+
+	if err != nil {
+		return nil, err
+	}
+	defer query.Close()
+
+	var interactions []models.Interaction
+
+	// executando a query
+	for query.Next() {
+
+		var interaction models.Interaction
+
+		if err = query.Scan(
+			&interaction.ClientName,
+			&interaction.Status,
+			&interaction.Date,
+			&interaction.Interaction,
+			&interaction.Content,
+		); err != nil {
+			return nil, err
+		}
+
+		interactions = append(interactions, interaction)
+	}
+
+	return interactions, nil
 }

@@ -1,4 +1,4 @@
-// aula 126
+// aula 130
 
 package main
 
@@ -11,6 +11,16 @@ import (
 	"webapp/src/router"
 	"webapp/src/utils"
 )
+
+/*
+func init() {
+	hashKey := hex.EncodeToString(securecookie.GenerateRandomKey(16))
+	fmt.Println(hashKey)
+
+	blockKey := hex.EncodeToString(securecookie.GenerateRandomKey(16))
+	fmt.Println(blockKey)
+}
+*/
 
 func main() {
 

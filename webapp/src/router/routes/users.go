@@ -5,9 +5,11 @@ import (
 	"webapp/src/controllers"
 )
 
-var userRoute = Route{
-	URI:                "/usuarios",
-	Method:             http.MethodPost,
-	Function:           controllers.CreateUser,
-	NeedAuthentication: false,
+var userRoute = []Route{
+	{
+		URI:                "/usuarios",
+		Method:             http.MethodPost,
+		Function:           controllers.CreateUser,
+		NeedAuthentication: false,
+	},
 }

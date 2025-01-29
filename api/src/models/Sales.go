@@ -15,6 +15,12 @@ type Sales struct {
 	Active   bool      `json:"active,omitempty"`   // indica se a venda está ativo ou não - esse dado não vai ser visível para o usuário
 }
 
+// Sale existe para ser usado como resposta
+type Sale struct {
+	Date time.Time `json:"date,omitempty"` // data da venda
+	Sale string    `json:"sale,omitempty"` // o que foi vendido
+}
+
 // Prepare vai chamar os métodos para validar os dados da venda
 func (sale *Sales) Prepare() error {
 

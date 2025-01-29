@@ -17,6 +17,15 @@ type Interactions struct {
 	Active      bool      `json:"active,omitempty"`      // se está ativo
 }
 
+// Interaction existe para ser usado como resposta
+type Interaction struct {
+	ClientName  string    `json:"clientName,omitempty"`
+	Status      string    `json:"status,omitempty"`
+	Date        time.Time `json:"date,omitempty"`
+	Interaction string    `json:"interaction,omitempty"`
+	Content     string    `json:"content,omitempty"`
+}
+
 // Prepare vai chamar os métodos para validar os dados da interação
 func (interaction *Interactions) Prepare() error {
 

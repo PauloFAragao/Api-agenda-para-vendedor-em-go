@@ -44,28 +44,30 @@ func (repository Clients) CreateClient(client models.Clients) (uint64, error) {
 }
 
 // SearchAllClients Busca todos os clientes que o usuário tem cadastrados
-func (repository Clients) SearchAllClients(userID uint64) ([]models.Clients, error) {
+func (repository Clients) SearchAllClients(userID uint64) ( /*[]models.Clients*/ []models.Client, error) {
 	// query de pesquisa
 	query, err := repository.db.Query(
-		"SELECT * FROM clients WHERE seller_id = ? AND active = true", userID)
+		"SELECT name, contacts, address FROM clients WHERE seller_id = ? AND active = true", userID)
 	if err != nil {
 		return nil, err
 	}
 	defer query.Close()
 
-	var clients []models.Clients
+	// var clients []models.Clients
+	var clients []models.Client
 
 	// executando
 	for query.Next() {
-		var client models.Clients
+		// var client models.Clients
+		var client models.Client
 
 		if err = query.Scan(
-			&client.ID,
-			&client.SellerID,
+			//&client.ID,
+			//&client.SellerID,
 			&client.Name,
 			&client.Contacts,
 			&client.Address,
-			&client.Active,
+			//&client.Active,
 		); err != nil {
 			return nil, err
 		}
@@ -77,29 +79,32 @@ func (repository Clients) SearchAllClients(userID uint64) ([]models.Clients, err
 }
 
 // SearchByID pesquisa um cliente do banco de dados, usando o id do cliente, o id do usuário e filtrando se o cliente está ativo
-func (repository Clients) SearchByID(clientID, userID uint64) (models.Clients, error) {
+func (repository Clients) SearchByID(clientID, userID uint64) ( /*models.Clients*/ models.Client, error) {
 
 	// query de pesquisa
 	query, err := repository.db.Query(
-		"SELECT * FROM clients WHERE id = ? AND seller_id = ? AND active = true", clientID, userID)
+		"SELECT name, contacts, address FROM clients WHERE id = ? AND seller_id = ? AND active = true", clientID, userID)
 	if err != nil {
-		return models.Clients{}, err
+		// return models.Clients{}, err
+		return models.Client{}, err
 	}
 	defer query.Close()
 
-	var client models.Clients
+	// var client models.Clients
+	var client models.Client
 
 	// executando a query
 	if query.Next() {
 		if err = query.Scan(
-			&client.ID,
-			&client.SellerID,
+			//&client.ID,
+			//&client.SellerID,
 			&client.Name,
 			&client.Contacts,
 			&client.Address,
-			&client.Active,
+			//&client.Active,
 		); err != nil {
-			return models.Clients{}, err
+			// return models.Clients{}, err
+			return models.Client{}, err
 		}
 	}
 
@@ -167,32 +172,34 @@ func (repository Clients) DisableClient(ID uint64) error {
 }
 
 // SearchByName busca por nome entre os clientes que o usuário tem cadastrado
-func (repository Clients) SearchByName(clientName string, userID uint64) ([]models.Clients, error) {
+func (repository Clients) SearchByName(clientName string, userID uint64) ( /*[]models.Clients*/ []models.Client, error) {
 
 	// adicionando % no começo e no final para fazer a busca no banco de dados usando a clausula LIKE
 	clientName = fmt.Sprintf("%%%s%%", clientName)
 
 	// query de pesquisa
 	query, err := repository.db.Query(
-		"SELECT * FROM clients WHERE name LIKE ? AND seller_id = ? AND active = true", clientName, userID)
+		"SELECT name, contacts, address FROM clients WHERE name LIKE ? AND seller_id = ? AND active = true", clientName, userID)
 	if err != nil {
 		return nil, err
 	}
 	defer query.Close()
 
-	var clients []models.Clients
+	// var clients []models.Clients
+	var clients []models.Client
 
 	// executando
 	for query.Next() {
-		var client models.Clients
+		// var client models.Clients
+		var client models.Client
 
 		if err = query.Scan(
-			&client.ID,
-			&client.SellerID,
+			//&client.ID,
+			//&client.SellerID,
 			&client.Name,
 			&client.Contacts,
 			&client.Address,
-			&client.Active,
+			//&client.Active,
 		); err != nil {
 			return nil, err
 		}

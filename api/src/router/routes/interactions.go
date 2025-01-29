@@ -30,6 +30,12 @@ var interactionRotes = []Route{
 		Function:           controllers.SearchInteractionWithClient,
 		NeedAuthentication: false,
 	},
+	{ // rota para ver todas as interações marcadas
+		URI:                "/interacoes-marcadas",
+		Method:             http.MethodGet,
+		Function:           controllers.ViewTaggedInteractions,
+		NeedAuthentication: true,
+	},
 	{ // rota para editar uma interação
 		URI:                "/interacao/{interactionId}",
 		Method:             http.MethodPut,
@@ -40,6 +46,12 @@ var interactionRotes = []Route{
 		URI:                "/interacao/{interactionId}",
 		Method:             http.MethodDelete,
 		Function:           controllers.DeleteInteraction,
+		NeedAuthentication: false,
+	},
+	{ // rota para buscar todas as interações de um dia
+		URI:                "/interacao-date/{interactionDate}",
+		Method:             http.MethodGet,
+		Function:           controllers.ViewInteractionsMarkedOnDate,
 		NeedAuthentication: false,
 	},
 }
